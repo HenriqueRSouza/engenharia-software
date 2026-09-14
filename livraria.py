@@ -1,4 +1,4 @@
-"""Sistema de Livraria - Versão 1.1.0
+"""Sistema de Livraria - Versão 1.1.1
 
 Módulo simples para gerenciamento, catálogo e busca de livros.
 """
@@ -24,16 +24,22 @@ def listar_livros() -> list:
 
 
 def buscar_livros(termo: str) -> list:
-    """Busca livros no catálogo por título ou autor (adicionado na v1.1.0)."""
+    """Busca livros no catálogo por título ou autor.
+    
+    Correção v1.1.1 (PATCH): busca insensível a maiúsculas/minúsculas e sem espaços extras.
+    """
+    termo_normalizado = termo.strip().lower()
     resultado = []
     for livro in catalogo:
-        if termo in livro["titulo"] or termo in livro["autor"]:
+        titulo = livro["titulo"].lower()
+        autor = livro["autor"].lower()
+        if termo_normalizado in titulo or termo_normalizado in autor:
             resultado.append(livro)
     return resultado
 
 
 if __name__ == "__main__":
-    print("=== Sistema de Livraria (v1.1.0) ===")
+    print("=== Sistema de Livraria (v1.1.1) ===")
     adicionar_livro(1, "O Alquimista", "Paulo Coelho", 39.90)
     adicionar_livro(2, "Dom Casmurro", "Machado de Assis", 29.90)
     adicionar_livro(3, "Memórias Póstumas de Brás Cubas", "Machado de Assis", 34.90)
@@ -42,7 +48,8 @@ if __name__ == "__main__":
     for item in listar_livros():
         print(f"[{item['id']}] {item['titulo']} - {item['autor']} (R$ {item['preco']:.2f})")
 
-    print("\n--- Busca por 'Machado' ---")
-    resultados = buscar_livros("Machado")
+    # Teste da correção do bug: termo em minúsculas e com espaços nas pontas
+    print("\n--- Busca por '  machado  ' (case-insensitive) ---")
+    resultados = buscar_livros("  machado  ")
     for item in resultados:
         print(f"Encontrado: {item['titulo']} ({item['autor']})")

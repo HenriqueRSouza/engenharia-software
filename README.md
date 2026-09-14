@@ -22,6 +22,7 @@ Compreender e aplicar na prática os conceitos de **Versionamento Semântico** (
 | :--- | :--- | :--- |
 | **`v1.0.0`** | Versão Inicial | Primeira versão estável: catálogo simples, cadastro e listagem de livros. |
 | **`v1.1.0`** | MINOR | Adiciona funcionalidade de busca de livros por termo (título ou autor). |
+| **`v1.1.1`** | PATCH | Correção na busca: suporte a busca case-insensitive e remoção de espaços extras. |
 
 ---
 
